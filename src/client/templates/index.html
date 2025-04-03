@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Marketing Reporting Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            background-color: #4a6cf7;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 1.5rem;
+            flex: 1 1 300px;
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #4a6cf7;
+            margin-top: 0;
+        }
+        .card-content {
+            margin-top: 1rem;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4a6cf7;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .btn:hover {
+            background-color: #3a5cd8;
+        }
+        .status {
+            background-color: #e9ecef;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .status h3 {
+            margin-top: 0;
+            color: #4a6cf7;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            font-weight: bold;
+        }
+        .status-value {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Digital Marketing Reporting Tool</h1>
+            <p>Simplified Version (No Authentication Required)</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h2>Welcome to the Digital Marketing Reporting Tool</h2>
+        <p>This is a simplified version of the application without authentication for easier testing and development.</p>
+        
+        <div class="dashboard">
+            <div class="card">
+                <h2>Data Sources</h2>
+                <div class="card-content">
+                    <p>Connect to your marketing data sources like Google Analytics, Facebook Ads, and more.</p>
+                    <button class="btn" disabled>Coming Soon</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Reports</h2>
+                <div class="card-content">
+                    <p>Create and customize reports across multiple channels and platforms.</p>
+                    <button class="btn" disabled>Coming Soon</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>AI Insights</h2>
+                <div class="card-content">
+                    <p>Get AI-powered recommendations and insights from your marketing data.</p>
+                    <button class="btn" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status">
+            <h3>System Status</h3>
+            <div class="status-item">
+                <span class="status-label">Server Status:</span>
+                <span class="status-value">Online</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">API Version:</span>
+                <span class="status-value">0.1.0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Mode:</span>
+                <span class="status-value">Simple (No Authentication)</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple health check to verify API connectivity
+        fetch('/health')
+            .then(response => response.json())
+            .then(data => {
+                console.log('Health check:', data);
+                if (data.status === 'ok') {
+                    document.querySelector('.status-value').textContent = 'Online';
+                }
+            })
+            .catch(error => {
+                console.error('Health check failed:', error);
+                document.querySelector('.status-value').textContent = 'Offline';
+            });
+    </script>
+</body>
+</html> 

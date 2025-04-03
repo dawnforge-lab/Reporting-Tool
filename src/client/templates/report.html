@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report.title }} - Marketing Report</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        .report-actions {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: #fff;
+            padding: 1rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .report-wrapper {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Report Actions Bar -->
+    <div class="report-actions">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0">{{ report.title }}</h4>
+                </div>
+                <div>
+                    <a href="/" class="btn btn-outline-secondary me-2">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                    <a href="/reports/{{ report.id }}/download" class="btn btn-outline-primary me-2">
+                        <i class="fas fa-download"></i> Download
+                    </a>
+                    <a href="/reports/{{ report.id }}/share" class="btn btn-outline-success me-2">
+                        <i class="fas fa-share-alt"></i> Share
+                    </a>
+                    <button class="btn btn-outline-danger" onclick="confirmDelete('{{ report.id }}')">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Content -->
+    <div class="report-wrapper">
+        <div id="report-content">
+            <!-- The HTML content of the report -->
+            {{ report.html|safe }}
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this report? This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Delete confirmation functionality
+        function confirmDelete(reportId) {
+            const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            modal.show();
+            
+            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+                // Send delete request to API
+                fetch(`/api/reports/${reportId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        window.location.href = '/reports';
+                    } else {
+                        alert('Error deleting report: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while deleting the report.');
+                });
+                
+                modal.hide();
+            });
+        }
+    </script>
+</body>
+</html> 
